@@ -12,3 +12,5 @@
 * TypeScript Project: A modern web front-end built with TypeScript and the Vite toolchain.
 * Static Frame Display: Showcases a sample processed frame saved from the Android application.
 * Stats Overlay: Displays basic frame statistics (resolution, FPS) using TypeScript to manipulate the DOM.
+  ![Alt text for image 1](D:\OPENCVintegrate\edgecamerafeed.jpeg)
+  ![Alt text for image 2](D:\OPENCVintegrate\edgecamerafeed.jpeg)
