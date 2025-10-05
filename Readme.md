@@ -8,7 +8,7 @@ This project demonstrates a **high-performance, real-time edge detection pipelin
 
 | Original Camera View | Edge Detection View |
 | :------------------: | :-----------------: |
-| ![Original Camera Feed](screenshhots/edgecamerafeed.jpeg) | ![Canny Edge Detection Feed](screenshhots/realcamerafeed.jpeg) |
+| ![Original Camera Feed](screenshots/realcamerafeed.jpeg) | ![Canny Edge Detection Feed](screenshots/edgecamerafeed.jpeg) |
 
 ---
 
@@ -77,3 +77,26 @@ F --> |"4️⃣ Processes Frame (OpenCV Canny)"| B
 B --> |"5️⃣ Converts Mat → Bitmap"| D[MyGLRenderer.java]
 D --> |"6️⃣ Renders via OpenGL ES 2.0"| E[GLSurfaceView]
 E --> |"7️⃣ Displays Frame"| G((📺 Screen Output))
+```
+
+-----
+
+## 📂 Repository Structure
+
+```
+OPENCVIntegrate/
+├── app/           # Main Android application module
+├── web/           # TypeScript + Vite web viewer source code
+├── openCV/        # Pre-built OpenCV SDK / native libraries
+├── screenshots/   # Project sample images
+├── build/         # Build output directory
+└── README.md      # This documentation file
+```
+
+---
+
+## ▶️ Demo
+
+See the real-time edge detection in action on an Android device!
+
+![Real-time Edge Detection Demo](screenshhots/demo_gif.gif)
