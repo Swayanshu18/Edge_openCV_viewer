@@ -8,7 +8,7 @@ This project demonstrates a **high-performance, real-time edge detection pipelin
 
 | Normal Camera View | Edge Detection View |
 | :----------------: | :-----------------: |
-| ![Normal Camera Feed](screenshots/realcamerafeed.jpeg) | ![Edge Detection Feed](screenshots/edgecamerafeed.jpeg) |
+| ![Normal Camera Feed](screenshhots/edgecamerafeed.jpeg) | ![Edge Detection Feed](screenshhots/realcamerafeed.jpeg) |
 
 > *(Note: Ensure the image paths match your repo folder structure — folder should be `/screenshots/`)*
 
