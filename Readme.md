@@ -39,10 +39,13 @@ The application is built on a multi-layered pipeline that passes data from the h
 graph TD
 A[CameraX API]
 ```mermaid
+    graph TD
+    A[CameraX API]
+
     subgraph Android App (Java Layer)
-        B(MainActivity.java)
-        C(ImageConverter.java)
-        D(MyGLRenderer.java)
+        B[MainActivity.java]
+        C[ImageConverter.java]
+        D[MyGLRenderer.java]
         E[GLSurfaceView]
     end
 
@@ -54,11 +57,11 @@ A[CameraX API]
         G((Screen Display))
     end
 
-    A -- "Provides 'ImageProxy'" --> B
-    B -- "1. Calls with 'ImageProxy'" --> C
-    C -- "2. Returns processed 'Mat' object" --> B
-    B -- "3. JNI Call: 'processFrame(Mat, ...)'" --> F
-    F -- "4. Modifies 'Mat' in place" --> B
-    B -- "5. Converts 'Mat' to 'Bitmap' & passes to" --> D
-    D -- "6. Renders Bitmap as texture onto" --> E
-    E -- "7. Displays pixels on" --> G
+    A -->|Provides 'ImageProxy'| B
+    B -->|"1️⃣ Calls with 'ImageProxy'"| C
+    C -->|"2️⃣ Returns processed 'Mat' object"| B
+    B -->|"3️⃣ JNI Call → processFrame(Mat, ...)"| F
+    F -->|"4️⃣ Modifies 'Mat' in place"| B
+    B -->|"5️⃣ Converts 'Mat' → Bitmap & passes to"| D
+    D -->|"6️⃣ Renders Bitmap as texture onto"| E
+    E -->|"7️⃣ Displays pixels on"| G
