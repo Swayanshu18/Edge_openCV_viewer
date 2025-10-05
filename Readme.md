@@ -1,67 +1,49 @@
-# Real-Time Edge Detection Camera & Web Viewer
+# ⚡ Real-Time Edge Detection Camera & Web Viewer
 
-This project is a comprehensive technical demonstration of a high-performance, real-time video processing pipeline on Android, coupled with a modern TypeScript-based web viewer for displaying the output.
+This project demonstrates a **high-performance, real-time edge detection pipeline** on **Android**, integrated with a **modern TypeScript-based web viewer** to visualize processed frames.
 
 ---
 
-## 📷 Screenshots
+## 📸 Screenshots
 
-Here are screenshots of the application in action, showing both the normal camera feed and the live edge-detected feed.
 | Normal Camera View | Edge Detection View |
-| :---: | :---: |
-| ![Normal Camera Feed](screenshhots/edgecamerafeed.jpeg) | ![Edge Detection Feed](screenshhots/realcamerafeed.jpeg) |
+| :----------------: | :-----------------: |
+| ![Normal Camera Feed](screenshots/realcamerafeed.jpeg) | ![Edge Detection Feed](screenshots/edgecamerafeed.jpeg) |
 
+> *(Note: Ensure the image paths match your repo folder structure — folder should be `/screenshots/`)*
 
 ---
 
 ## ✅ Features Implemented
 
-### **Android Application:**
+### 📱 **Android Application**
 
-* **Live Camera Feed:** Captures a high-framerate video stream using Android's modern **CameraX API**.
-* **Real-Time C++ Processing:** Sends every camera frame to a native C++ layer via the **JNI (Java Native Interface)** for maximum performance.
-* **OpenCV Edge Detection:** Utilizes the powerful **OpenCV** library in C++ to apply a Canny edge detection filter to each frame.
-* **GPU-Powered Rendering:** Displays the final processed video smoothly using a custom **OpenGL ES 2.0** renderer, ensuring the UI remains fast and responsive.
-* **Interactive Toggle:** A simple on-screen button to switch between the original camera feed and the live edge-detected view.
+- **Live Camera Feed:** Captures high-framerate video using Android’s **CameraX API**.
+- **Real-Time C++ Processing:** Sends every camera frame to a **C++ native layer** via **JNI** for maximum performance.
+- **OpenCV Edge Detection:** Uses **OpenCV (C++)** to apply **Canny Edge Detection** on every frame.
+- **GPU-Accelerated Rendering:** Smoothly renders the processed video using **OpenGL ES 2.0**, ensuring responsive UI.
+- **Interactive Toggle:** Tap a button to switch between **original** and **edge-detected** views in real time.
 
-### **Web Viewer:**
+### 💻 **Web Viewer**
 
-* **TypeScript Project:** A modern web front-end built with **TypeScript** and the **Vite** toolchain.
-* **Static Frame Display:** Showcases a sample processed frame saved from the Android application.
-* **Stats Overlay:** Displays basic frame statistics (resolution, FPS) using TypeScript to manipulate the DOM.
+- **Modern TypeScript + Vite Stack:** Lightweight and fast setup for web visualization.
+- **Static Frame Display:** Displays a sample processed frame from the Android app.
+- **Dynamic Stats Overlay:** Uses DOM manipulation in TypeScript to show frame metadata (e.g., resolution, FPS).
 
 ---
 
 ## 🧠 Architecture Overview
 
-The application is built on a multi-layered pipeline that passes data from the high-level Java layer to low-level C++ for efficient processing and back for rendering.
+The project follows a modular, high-performance data flow from Java → C++ → OpenGL → Display.
 
+```mermaid
 graph TD
-A[CameraX API]
 
-    graph TD
-    A[CameraX API]
-
-    subgraph Android App (Java Layer)
-        B[MainActivity.java]
-        C[ImageConverter.java]
-        D[MyGLRenderer.java]
-        E[GLSurfaceView]
-    end
-
-    subgraph Native (C++ Layer)
-        F[native-lib.cpp]
-    end
-
-    subgraph Final Output
-        G((Screen Display))
-    end
-
-    A -->|Provides 'ImageProxy'| B
-    B -->|"1️⃣ Calls with 'ImageProxy'"| C
-    C -->|"2️⃣ Returns processed 'Mat' object"| B
-    B -->|"3️⃣ JNI Call → processFrame(Mat, ...)"| F
-    F -->|"4️⃣ Modifies 'Mat' in place"| B
-    B -->|"5️⃣ Converts 'Mat' → Bitmap & passes to"| D
-    D -->|"6️⃣ Renders Bitmap as texture onto"| E
-    E -->|"7️⃣ Displays pixels on"| G
+A[📷 CameraX API] --> B[MainActivity.java]
+B --> |"1️⃣ Sends ImageProxy"| C[ImageConverter.java]
+C --> |"2️⃣ Converts to Mat"| B
+B --> |"3️⃣ JNI → processFrame(Mat)"| F[native-lib.cpp]
+F --> |"4️⃣ Processes Frame (OpenCV Canny)"| B
+B --> |"5️⃣ Converts Mat → Bitmap"| D[MyGLRenderer.java]
+D --> |"6️⃣ Renders via OpenGL ES 2.0"| E[GLSurfaceView]
+E --> |"7️⃣ Displays Frame"| G((📺 Screen Output))
