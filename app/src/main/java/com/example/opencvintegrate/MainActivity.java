@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Environment; // <<<--- ADDED IMPORT
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
+import java.io.File; // <<<--- ADDED IMPORT
+import java.io.FileOutputStream; // <<<--- ADDED IMPORT
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private GLSurfaceView glSurfaceView;
     private MyGLRenderer myRenderer;
     private Mat matRgba;
+
+    private int frameCount = 0; // <<<--- CODE ADDED HERE (1/2)
 
     // Load the native library that contains our C++ code
     static {
@@ -114,6 +119,27 @@ public class MainActivity extends AppCompatActivity {
         // 5. Tell the GLSurfaceView that it needs to re-render
         glSurfaceView.requestRender();
 
+
+        // vvvvvvvvvvvvvvvv CODE ADDED HERE (2/2) vvvvvvvvvvvvvvvv
+        // Save the first processed frame to a file
+        if (frameCount < 1) {
+            try {
+                File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File file = new File(dir, "processed_frame.png");
+                FileOutputStream out = new FileOutputStream(file);
+                processedBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+                Log.d(TAG, "Saved frame to: " + file.getAbsolutePath());
+                runOnUiThread(() -> Toast.makeText(this, "Frame Saved!", Toast.LENGTH_SHORT).show());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            frameCount++; // Increment counter so it only saves once
+        }
+        // ^^^^^^^^^^^^^^^^ CODE ADDED HERE (2/2) ^^^^^^^^^^^^^^^^
+
+
         // 6. IMPORTANT: Close the ImageProxy
         imageProxy.close();
     }
@@ -125,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         glSurfaceView.onResume();
     }
+
+
 
     @Override
     protected void onPause() {
