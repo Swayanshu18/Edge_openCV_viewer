@@ -38,7 +38,7 @@ The application is built on a multi-layered pipeline that passes data from the h
 
 graph TD
 A[CameraX API]
-
+```mermaid
     subgraph Android App (Java Layer)
         B(MainActivity.java)
         C(ImageConverter.java)
