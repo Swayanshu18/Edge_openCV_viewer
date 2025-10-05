@@ -38,7 +38,7 @@ The application is built on a multi-layered pipeline that passes data from the h
 
 graph TD
 A[CameraX API]
-```mermaid
+
     graph TD
     A[CameraX API]
 
