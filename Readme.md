@@ -39,12 +39,31 @@ The application is built on a multi-layered pipeline that passes data from the h
 
 #### **Android App Frame Flow**
 
-```mermaid
 graph TD
-    A[CameraX Frame] --> B{Java: YUV to RGBA Mat};
-    B --> C[JNI Bridge];
-    C --> D{C++: Rotate & Apply Canny Filter};
-    D --> E[JNI Bridge];
-    E --> F{Java: Mat to Bitmap};
-    F --> G[OpenGL ES Renderer];
-    G --> H((Screen Display));
+subgraph Hardware
+A[Camera Sensor];
+end
+
+    subgraph Android App (Java Layer)
+        B(MainActivity.java);
+        C(ImageConverter.java);
+        D(MyGLRenderer.java);
+        E[GLSurfaceView];
+    end
+
+    subgraph Native (C++ Layer)
+        F[native-lib.cpp];
+    end
+
+    subgraph Final Output
+        G((Screen Display));
+    end
+
+    A -- "CameraX provides 'ImageProxy'" --> B;
+    B -- "1. Calls with 'ImageProxy'" --> C;
+    C -- "2. Returns processed 'Mat' object" --> B;
+    B -- "3. JNI Call: 'processFrame(Mat, ...)'" --> F;
+    F -- "4. Modifies 'Mat' in place" --> B;
+    B -- "5. Converts 'Mat' to 'Bitmap' & passes to" --> D;
+    D -- "6. Renders Bitmap as texture onto" --> E;
+    E -- "7. Displays pixels on" --> G;s
