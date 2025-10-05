@@ -1,0 +1,23 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="#1a1a1a"/>
+  <rect x="460" y="390" width="1000" height="300" rx="20" fill="#2d2d2d" stroke="#646cff" stroke-width="4"/>
+  <text x="960" y="500" font-family="Arial, sans-serif" font-size="48" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    Sample Processed Frame
+  </text>
+  <text x="960" y="570" font-family="Arial, sans-serif" font-size="32" fill="#888888" text-anchor="middle">
+    1920 × 1080
+  </text>
+  <text x="960" y="620" font-family="Arial, sans-serif" font-size="24" fill="#646cff" text-anchor="middle">
+    Place your frame as public/sample-frame.jpg
+  </text>
+  
+  <!-- Corner markers -->
+  <circle cx="100" cy="100" r="8" fill="#0f0"/>
+  <circle cx="1820" cy="100" r="8" fill="#0f0"/>
+  <circle cx="100" cy="980" r="8" fill="#0f0"/>
+  <circle cx="1820" cy="980" r="8" fill="#0f0"/>
+  
+  <!-- Grid lines -->
+  <line x1="960" y1="0" x2="960" y2="1080" stroke="#333" stroke-width="2" stroke-dasharray="10,10"/>
+  <line x1="0" y1="540" x2="1920" y2="540" stroke="#333" stroke-width="2" stroke-dasharray="10,10"/>
+</svg>
