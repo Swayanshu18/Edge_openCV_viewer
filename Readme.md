@@ -1,109 +1,79 @@
 # ⚡ Real-Time Edge Detection Camera & Web Viewer
 
-This project demonstrates a **high-performance, real-time edge detection pipeline** on **Android**, integrated with a **modern TypeScript-based web viewer** to visualize processed frames.
+This project demonstrates a **high-performance, real-time edge detection pipeline** on **Android**, integrated with a **modern TypeScript-based web viewer** for visualization and statistics. It leverages the speed of **C++ (OpenCV)** and **GPU-accelerated rendering (OpenGL ES)** to achieve a smooth, responsive user experience.
 
 ---
 
 ## 📸 Screenshots
 
-| Normal Camera View | Edge Detection View |
-| :----------------: | :-----------------: |
-| ![Normal Camera Feed](screenshhots/edgecamerafeed.jpeg) | ![Edge Detection Feed](screenshhots/realcamerafeed.jpeg) |
-
-
+| Original Camera View | Edge Detection View |
+| :------------------: | :-----------------: |
+| ![Original Camera Feed](screenshots/realcamerafeed.jpeg) | ![Canny Edge Detection Feed](screenshots/edgecamerafeed.jpeg) |
 
 ---
 
-## ✅ Features Implemented
+## ✨ Features
 
-### 📱 **Android Application**
+### 📱 **Android Application (High-Performance Core)**
 
-- **Live Camera Feed:** Captures high-framerate video using Android’s **CameraX API**.
-- **Real-Time C++ Processing:** Sends every camera frame to a **C++ native layer** via **JNI** for maximum performance.
-- **OpenCV Edge Detection:** Uses **OpenCV (C++)** to apply **Canny Edge Detection** on every frame.
-- **GPU-Accelerated Rendering:** Smoothly renders the processed video using **OpenGL ES 2.0**, ensuring responsive UI.
-- **Interactive Toggle:** Tap a button to switch between **original** and **edge-detected** views in real time.
+* **Live Camera Capture:** Captures high-framerate video efficiently using Android’s **CameraX API**.
+* **Real-Time C++ Processing:** Utilizes **JNI (Java Native Interface)** to pass frames to a native C++ layer, bypassing Dalvik overhead for maximum speed.
+* **OpenCV Edge Detection:** Implements the **Canny Edge Detection algorithm** using **OpenCV (C++)** on every frame.
+* **GPU-Accelerated Rendering:** Ensures smooth display of processed video with minimal latency via **OpenGL ES 2.0**.
+* **Interactive Toggle:** Allows users to switch instantly between the **original** and **edge-detected** views.
 
-### 💻 **Web Viewer**
+### 💻 **Web Viewer (Visualization & Stats)**
 
-- **Modern TypeScript + Vite Stack:** Lightweight and fast setup for web visualization.
-- **Static Frame Display:** Displays a sample processed frame from the Android app.
-- **Dynamic Stats Overlay:** Uses DOM manipulation in TypeScript to show frame metadata (e.g., resolution, FPS).
+* **Modern Stack:** Built with **TypeScript** and **Vite** for a lightweight and fast development environment.
+* **Frame Visualization:** Displays a processed frame, serving as a placeholder or future target for a live stream.
+* **Dynamic Stats Overlay:** Uses DOM manipulation to display real-time metadata like **frame rate (FPS)** and **resolution**.
 
 ---
-# **Getting Started**
+## 🚀 Getting Started
 
-Follow these steps to run both the Android and Web parts of the project locally.
+Follow these steps to set up and run both the Android application and the local Web Viewer.
 
-1️⃣ **Android App Setup**
+### 1️⃣ Android App Setup
 
-Open the project in Android Studio.
+1.  Open the project in **Android Studio**.
+2.  Ensure you have a device or emulator running. *Targeting **Android SDK 34+** is recommended.*
+3.  Sync Gradle if prompted to ensure all dependencies are resolved.
+4.  Build and run the app from the `app/` module.
+5.  The app should launch and display the real-time edge detection camera feed.
+    > **Note:** The **OpenCV library** is pre-packaged and included in the `openCV/` folder.
 
-Make sure you have a device or emulator running.
+### 2️⃣ Web Viewer Setup
 
-Sync Gradle if prompted.
+The web viewer requires **Node.js** and **npm** to be installed.
 
-Build and run the app from app/ module.
+1.  Open your terminal and navigate into the web directory:
+    ```bash
+    cd web
+    ```
+2.  Install the necessary dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the local development server:
+    ```bash
+    npm run dev
+    ```
+4.  Open your browser to the URL displayed in the terminal (usually `http://localhost:5173`) to view the application and its statistics overlay.
 
-The app should launch and display the real-time edge detection camera feed.
+---
 
-Notes:
-
-Android SDK 34+ recommended.
-
-OpenCV library is included in openCV/ folder.
-
-2️⃣ **Web Viewer Setup**
-
-Open the project in VS Code or any editor of your choice.
-
-Navigate to the web/ folder:
-
-cd web
-
-
-Install dependencies (assuming Node.js + npm installed):
-
-npm install
-
-
-Start development server:
-
-npm run dev
-
-
-Open the browser at http://localhost:5173 (or URL shown in terminal) to see the live web viewer.
-
-Notes:
-
-Uses TypeScript + Vite.
-
-Displays the processed frame metadata like FPS, resolution, etc.
-
-3️⃣ **Repository Structure**
-OPENCVIntegrate/
-├── app/           # Android project
-├── web/           # Web viewer
-├── openCV/        # OpenCV SDK / native libs
-├── screenshots/   # Sample images
-├── build/         # Build output
-└── README.md      # Documentation
 ## 🧠 Architecture Overview
 
-The project follows a modular, high-performance data flow from Java → C++ → OpenGL → Display.
-
-
+The project employs a modular, high-performance data flow to minimize latency, utilizing the following sequence: **Java → C++ → OpenGL → Display**.
 
 ```mermaid
 graph TD
 
-A[📷 CameraX API] --> B[MainActivity.java]
+A[📷 CameraX API] --> B(MainActivity.java)
 B --> |"1️⃣ Sends ImageProxy"| C[ImageConverter.java]
-C --> |"2️⃣ Converts to Mat"| B
+C --> |"2️⃣ Converts to OpenCV Mat"| B
 B --> |"3️⃣ JNI → processFrame(Mat)"| F[native-lib.cpp]
 F --> |"4️⃣ Processes Frame (OpenCV Canny)"| B
 B --> |"5️⃣ Converts Mat → Bitmap"| D[MyGLRenderer.java]
 D --> |"6️⃣ Renders via OpenGL ES 2.0"| E[GLSurfaceView]
 E --> |"7️⃣ Displays Frame"| G((📺 Screen Output))
-
-
