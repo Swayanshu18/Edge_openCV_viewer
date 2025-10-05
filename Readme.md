@@ -8,7 +8,7 @@ This project demonstrates a **high-performance, real-time edge detection pipelin
 
 | Original Camera View | Edge Detection View |
 | :------------------: | :-----------------: |
-| ![Original Camera Feed](screenshots/realcamerafeed.jpeg) | ![Canny Edge Detection Feed](screenshots/edgecamerafeed.jpeg) |
+| ![Original Camera Feed](screenshhots/edgecamerafeed.jpeg) | ![Canny Edge Detection Feed](screenshhots/realcamerafeed.jpeg) |
 
 ---
 
